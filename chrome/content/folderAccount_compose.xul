@@ -16,7 +16,7 @@
 var folderAccountCompose = {
 
     // Global variables
-    prefs: Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch),
+    prefs: Services.prefs,
     
     
     
@@ -134,17 +134,14 @@ ComposeStartup = function dummy(recycled, aParams) {
    
 
     var folderURI = ""; 
-    var mediator = Components.classes["@mozilla.org/rdf/datasource;1?name=window-mediator"].getService(Components.interfaces.nsIWindowDataSource);
+    var mediator= Services.wm;
 
-    // First, grab a list of all open windows...
-    var ids = folderAccountCompose.copyAllWindowIDs();
-
-    // Now cycle through those windows until we find one that understands GetSelectedFolderURI()
+    // Now cycle through all windows until we find one that understands GetSelectedFolderURI()
     // Known bug: if there is more than one "main" window open, we can't tell which one opened the compose window.
 
-    
-    for(var i=0; i < ids.length; i++ ) {    
-        var domWindow = mediator.getWindowForResource(ids[i]);
+    var enumerator = mediator.getEnumerator(null);
+    while (enumerator.hasMoreElements()) {
+        var domWindow = enumerator.getNext();
         try {
             if(domWindow.gFolderDisplay && domWindow.gFolderDisplay.displayedFolder) {
                folderURI = domWindow.gFolderDisplay.displayedFolder.URI;
