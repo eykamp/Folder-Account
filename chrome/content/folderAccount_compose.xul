@@ -12,7 +12,6 @@
 // Generate a list of all window IDs
 // Code from http://forums.mozillazine.org/viewtopic.php?p=2278338&
 
-
 var folderAccountCompose = {
 
     // Global variables
@@ -181,8 +180,8 @@ ComposeStartup = function dummy(recycled, aParams) {
     //Reply-To: Set everytime
     // (by Jakob)
 
-    if (params.type == 0 && !params.composeFields.replyTo) {     // type: 0 = New message, 3 = Forward, 6 = Reply, 2 = Reply All
-        // Only set the To: address on a new message.  For forwards, or Reply All, more likely than not the user will want to use a non-default To address.
+    if ((params.type == 0 || folderAccountCompose.getPrefs(folderURI,"replyToOnReplyForward.")) && !params.composeFields.replyTo) {     // type: 0 = New message, 3 = Forward, 6 = Reply, 2 = Reply All
+        // TODO: on Reply All, remove replyTo address in To or CC if present
 
          /////// ReplyTo:
         try {
