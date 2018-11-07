@@ -48,6 +48,7 @@ var folderAccountProps = {
         var defaultCc;
         var overrideReturnAddress;
         var addToCcOnReply;
+	var replyToOnReplyForward;
         var defaultReplyTo;
         
         // Selected From: account
@@ -70,6 +71,13 @@ var folderAccountProps = {
              addToCcOnReply = userSettings.getCharPref("addToCcOnReply." + folderURI);
          } catch (e) {
              addToCcOnReply = "false";
+         }
+
+	// Include RepyTo on reply?
+         try {
+             replyToOnReplyForward = userSettings.getCharPref("replyToOnReplyForward." + folderURI);
+         } catch (e) {
+             replyToOnReplyForward = "false";
          }
          
          try {
@@ -178,6 +186,10 @@ var folderAccountProps = {
         var label5 = document.createElement("label");
         label5.setAttribute("value","Additional Reply-To:");
 
+        var hbox6 = document.createElement("hbox");
+        var label6 = document.createElement("label");
+        label6.setAttribute("value","   ");     // Indent checkbox
+
 
 
         // I can't make this work!!
@@ -221,6 +233,13 @@ var folderAccountProps = {
 
         hbox5.appendChild(label5); 
         hbox5.appendChild(drtInput);
+
+	var dccCheckbox = document.createElement("checkbox");
+        dccCheckbox.setAttribute("id","mlFolderAccountReplyToOnReplyForward");  // So we can find it again later!
+        dccCheckbox.setAttribute("label","use Reply To address also on reply and forward");
+        dccCheckbox.setAttribute("checked", replyToOnReplyForward);
+        hbox6.appendChild(label6);             
+        hbox6.appendChild(dccCheckbox);
         
         
 
@@ -253,6 +272,10 @@ var folderAccountProps = {
         var vbox5 = document.createElement("vbox");
         vbox5.appendChild(hbox5);
 
+	// And one more for Reply-To on Reply
+        var vbox6 = document.createElement("vbox");
+        vbox6.appendChild(hbox6);
+
 
 
         var tabpanels = document.getElementById("folderPropTabPanel");
@@ -269,6 +292,7 @@ var folderAccountProps = {
         tabpanels.firstChild.appendChild(vbox);
         tabpanels.firstChild.appendChild(vbox2);
         tabpanels.firstChild.appendChild(vbox5);
+        tabpanels.firstChild.appendChild(vbox6);
         tabpanels.firstChild.appendChild(vbox3);
         tabpanels.firstChild.appendChild(vbox4);
 
@@ -312,6 +336,7 @@ var folderAccountProps = {
             var mlFrom                    = document.getElementById("mlFolderAccount");
             var mlTo                      = document.getElementById("mlFolderAccountDefaultTo");
             var mlAddToCcOnReply          = document.getElementById("mlFolderAccountAddToCcOnReply");
+	    var mlReplyToOnReplyForward	  = document.getElementById("mlFolderAccountReplyToOnReplyForward");
             var mlOverrideReturnAddress   = document.getElementById("mlFolderAccountOverrideReturnAddress");
             var mlReplyTo                 = document.getElementById("mlFolderAccountDefaultReplyTo");  // (by Jakob)
 
@@ -352,6 +377,7 @@ var folderAccountProps = {
 
             // Save state of our checkbox
             prefs.setCharPref("addToCcOnReply." + folderURI, mlAddToCcOnReply.getAttribute("checked"));
+	    prefs.setCharPref("replyToOnReplyForward." + folderURI, mlReplyToOnReplyForward.getAttribute("checked"));
             prefs.setCharPref("overrideReturnAddress." + folderURI, mlOverrideReturnAddress.getAttribute("checked"));
             prefs.setCharPref("replyTo." + folderURI,mlReplyTo.value);
 
