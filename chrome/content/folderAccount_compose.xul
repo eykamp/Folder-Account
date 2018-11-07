@@ -20,25 +20,25 @@ var folderAccountCompose = {
     
     
     
-    copyAllWindowIDs: function () {
-        var ids = [];
-        var rdfService = Components.classes["@mozilla.org/rdf/rdf-service;1"]
-                .getService(Components.interfaces.nsIRDFService);
-        var ds = rdfService.GetDataSourceBlocking("rdf:window-mediator");
-        var root = rdfService.GetResource("NC:WindowMediatorRoot");
-        var container = Components.classes["@mozilla.org/rdf/container;1"]
-                .getService(Components.interfaces.nsIRDFContainer);
-        container.Init(ds, root);
+    // copyAllWindowIDs: function () {
+    //     var ids = [];
+    //     var rdfService = Components.classes["@mozilla.org/rdf/rdf-service;1"]
+    //             .getService(Components.interfaces.nsIRDFService);
+    //     var ds = rdfService.GetDataSourceBlocking("rdf:window-mediator");
+    //     var root = rdfService.GetResource("NC:WindowMediatorRoot");
+    //     var container = Components.classes["@mozilla.org/rdf/container;1"]
+    //             .getService(Components.interfaces.nsIRDFContainer);
+    //     container.Init(ds, root);
     
-        var elements = container.GetElements();
-        while (elements.hasMoreElements()) {
-            var element = elements.getNext()
-                .QueryInterface(Components.interfaces.nsIRDFResource);
-            ids.push(element.Value);
-        }
+    //     var elements = container.GetElements();
+    //     while (elements.hasMoreElements()) {
+    //         var element = elements.getNext()
+    //             .QueryInterface(Components.interfaces.nsIRDFResource);
+    //         ids.push(element.Value);
+    //     }
         
-        return ids;
-    },
+    //     return ids;
+    // },
     
     
     getPrefs: function (folderURI,blob) {
