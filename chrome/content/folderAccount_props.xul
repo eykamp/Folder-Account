@@ -39,8 +39,9 @@ var folderAccountProps = {
         // Retrieve any stored user settings...
 
         //var folderURI = window.opener.GetSelectedFolderURI();             // Pre 3.0
-        var folderURI = window.opener.gFolderDisplay.displayedFolder.URI;   // Want something like "imap://jefferson@www.mailco.com/INBOX/Trash"
-        
+        //var folderURI = window.opener.gFolderDisplay.displayedFolder.URI;   // Want something like "imap://jefferson@www.mailco.com/INBOX/Trash"
+	var folderURI =  window.arguments[0].folder.URI;
+
 
         var userSettings = allPrefs.getBranch("extensions.folderaccount.");   
         var defaultFrom;
@@ -350,7 +351,8 @@ var folderAccountProps = {
             var mlReplyTo                 = document.getElementById("mlFolderAccountDefaultReplyTo");  // (by Jakob)
 
 
-            var folderURI = window.opener.gFolderDisplay.displayedFolder.URI;
+            //var folderURI = window.opener.gFolderDisplay.displayedFolder.URI;
+	    var folderURI =  window.arguments[0].folder.URI;
 
             var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService);
             prefs = prefs.getBranch("extensions.folderaccount.");   
