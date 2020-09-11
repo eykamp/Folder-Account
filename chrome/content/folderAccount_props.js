@@ -1,15 +1,9 @@
-<?xml version="1.0"?>
-
-<overlay id="folderAccountOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-
-
-
-<script type="application/x-javascript"><![CDATA[
 
 var folderAccountProps = {
 
     addTab: function() {
 
+/* => TB78
         // Insert a new dropdown dynamically into the first tab of the properties menu
         // Can't use ovelay because parent has no id
 
@@ -26,7 +20,10 @@ var folderAccountProps = {
         menuItem.setAttribute("label","Use Default");
         menuItem.setAttribute("value","Use Default");
         menuPopup.appendChild(menuItem);
+*/
 
+        var menuList = document.getElementById("mlFolderAccount");
+        menuList.selectedItem = menuList.appendItem("Use Default", "Use Default");
 
 
         // Get the "mail" prefrence branch
@@ -46,7 +43,9 @@ var folderAccountProps = {
         var userSettings = allPrefs.getBranch("extensions.folderaccount.");   
         var defaultFrom;
         var defaultTo;
+/* unused variable
         var defaultCc;
+*/
         var overrideReturnAddress;
         var addToCcOnReply;
 	var replyToOnReplyForward;
@@ -132,6 +131,7 @@ var folderAccountProps = {
                             acctname = prefs.getCharPref("server." + server + ".name");
                         }
 
+/* => TB78
                         menuItem = document.createElement("menuitem");
                         menuItem.setAttribute("label",acctname);
                         menuItem.setAttribute("value",ident);
@@ -139,6 +139,12 @@ var folderAccountProps = {
                         menuPopup.appendChild(menuItem);
 
                         if (defaultFrom == ident) { menuItem.setAttribute("selected","true") }
+*/
+                        let menuItem = menuList.appendItem(acctname, ident);
+                        if (defaultFrom == ident) {
+                          menuList.selectedItem = menuItem;
+                        }
+
 
                     } catch(e) { }  // Nothing to do but skip this identity...
                 }
@@ -146,8 +152,16 @@ var folderAccountProps = {
 
             } catch(e) { }  // Nothing to do but skip this account...
 
+            document.getElementById("mlFolderAccountDefaultTo").setAttribute("value", defaultTo);
+            document.getElementById("mlFolderAccountAddToCcOnReply").checked = addToCcOnReply;
+            document.getElementById("mlFolderAccountReplyToOnReplyForward").checked = replyToOnReplyForward;
+            document.getElementById("mlFolderAccountOverrideReturnAddress").checked = overrideReturnAddress;
+            document.getElementById("mlFolderAccountDefaultReplyTo").setAttribute("value", defaultReplyTo);  // (by Jakob)
+
         }
         
+
+/* => TB78
 
         // Create a menuList to contain the menuPopup
         var menuList = document.createElement("menulist");
@@ -310,9 +324,12 @@ var folderAccountProps = {
         // therefore changed preference weren't saved.
         // This way seems to work fine:
 
+*/
+
         document.addEventListener("dialogaccept", function(event) {
         	folderAccountProps.saveAccountPrefs();
         });
+
     },
 
 
@@ -397,14 +414,41 @@ var folderAccountProps = {
     }
 };
 
+/* => TB78
 // Run our main code when the window has been loaded...
 // Use try/catch to get rid of a spurious error message.  Remember to disable this when debugging!!
 try {
     window.addEventListener("load", folderAccountProps.addTab(), false);
 } catch(e) { }
+*/
 
+function onLoad(activatedWhileWindowOpen) {
+  WL.injectCSS("chrome://messenger/skin/menulist.css");
+  WL.injectElements(`
+    <tab id="FolderAccountTab" label="Folder Account" insertafter="GeneralTab"/>
+    <vbox id="FolderAccountPanel" insertafter="GeneralPanel">
+      <vbox id="nameBox" align="right" class="input-container">
+        <label id="identityLabel" value="From Account:" accesskey="" control="mlFolderAccount"/>
+        <menulist is="menulist-editable" id="mlFolderAccount" type="description" disableautoselect="false" onkeypress="" oncommand="" disableonsend="true">
+          <menupopup id="mlFolderAccountPopup"/>
+          <spacer height="2"/>
+        </menulist>
+        <label id="defaultToLabel" value="Default To:" control="mlFolderAccountDefaultTo" accesskey=""/>
+        <html:input id="mlFolderAccountDefaultTo" type="text" oninput="" class="input-inline"/>
+        <label id="defaultReplyToLabel" value="Additional Reply-To:" control="mlFolderAccountDefaultReplyTo" accesskey=""/>
+        <html:input id="mlFolderAccountDefaultReplyTo" type="text" class="input-inline"/>
+      </vbox>
+      <spacer height="6"/>
+      <vbox>
+        <checkbox id="mlFolderAccountReplyToOnReplyForward" label="Use Reply-To address also on Reply and Forward" accesskey=""/>
+        <spacer height="2"/>
+        <checkbox id="mlFolderAccountAddToCcOnReply" label="Add to CC list on Reply (won't work on Reply-All)" accesskey=""/>
+        <spacer height="2"/>
+        <checkbox id="mlFolderAccountOverrideReturnAddress" label="Ignore From account on Reply or Reply-All (i.e. let Thunderbird choose)" accesskey=""/>
+      </vbox>
+    </vbox>
+  `, ["chrome://messenger/locale/folderProps.dtd", "chrome://messenger/locale/messengercompose/messengercompose.dtd"]);
+  folderAccountProps.addTab();
+}
 
-]]></script>
-
-
-</overlay>
+function onUnload(deactivatedWhileWindowOpen) {}

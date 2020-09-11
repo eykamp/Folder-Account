@@ -1,8 +1,3 @@
-<?xml version="1.0"?>
-
-<overlay id="folderAccount_main" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-
-<script type="application/x-javascript"><![CDATA[
 
 
 var folderAccount = {
@@ -208,16 +203,15 @@ var folderAccount = {
 
 // Run these when Thunderbird is loaded or unloaded
 
+/* => TB78
     window.addEventListener("load", function(e) { folderAccount.load(); }, false);
     window.addEventListener("unload", function(e) { folderAccount.unload(); }, false);
+*/
 
+function onLoad(activatedWhileWindowOpen) {
+  folderAccount.load();
+}
 
-]]></script>
-
-
-</overlay>
-
-
-
-
- 
+function onUnload(deactivatedWhileWindowOpen) {
+  folderAccount.unload();
+}

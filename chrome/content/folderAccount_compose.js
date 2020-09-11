@@ -1,13 +1,6 @@
-<?xml version="1.0"?>
-
-
-
-<overlay id="folderAccountCompose_propsOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-
-
-
-
-<script type="application/x-javascript"><![CDATA[
+var { MailServices } = ChromeUtils.import(
+  "resource:///modules/MailServices.jsm"
+);
 
 // Generate a list of all window IDs
 // Code from http://forums.mozillazine.org/viewtopic.php?p=2278338&
@@ -99,12 +92,12 @@ var folderAccountCompose = {
 
 
     
-var ptrComposeStartup = ComposeStartup;  // Pointer to original ComposeLoad function
+var ptrComposeStartup = window.ComposeStartup;  // Pointer to original ComposeLoad function
 
 
 
 // Modified version of ComposeStartup
-ComposeStartup = function dummy(recycled, aParams) {
+ComposeStartup = function dummy(aParams) {
 
     // This code borrowed from elsewhere in TB
     var params;
@@ -150,10 +143,10 @@ ComposeStartup = function dummy(recycled, aParams) {
 
     }
     
-    folderAccountCompose.logMsg('Using settings for folderURI = >' + folderURI + '<');
+    console.log('Using settings for folderURI = >' + folderURI + '<');
     
     
-    // folderAccountCompose.logMsg(Dumper(params));   // Call Dumper
+    // console.log(Dumper(params));   // Call Dumper
     
     
     
@@ -170,7 +163,7 @@ ComposeStartup = function dummy(recycled, aParams) {
 
             if (To) {
                 params.composeFields.to = To; 
-                folderAccountCompose.logMsg('Default To: (new) address = >' + To + '<');
+                console.log('Default To: (new) address = >' + To + '<');
             }
 
         } catch (e) { }         // Nothing to do, just leave to: at default value
@@ -190,7 +183,7 @@ ComposeStartup = function dummy(recycled, aParams) {
         if (replyTo) {
                 //params.identity.replyTo = '';        // Will alter base identity ==> could override here and restore later... but that's risky!!
                 params.composeFields.replyTo = replyTo; 
-                folderAccountCompose.logMsg('Adding Reply-To: = >' + replyTo + '<');
+                console.log('Adding Reply-To: = >' + replyTo + '<');
             }
 
         } catch (e) { }         // Nothing to do, just leave to: at default value
@@ -206,7 +199,7 @@ ComposeStartup = function dummy(recycled, aParams) {
 
             if (addToCcOnReply == "true") {
                 params.composeFields.cc = To; 
-                folderAccountCompose.logMsg('Adding CC: = >' + To + '<');
+                console.log('Adding CC: = >' + To + '<');
             }
 
         } catch (e) { }         // Nothing to do, just leave cc: at default value
@@ -231,11 +224,11 @@ ComposeStartup = function dummy(recycled, aParams) {
 
     if (FromID && override) {    
         params.identity = MailServices.accounts.getIdentity(FromID);
-        folderAccountCompose.logMsg('From identity set to >' + FromID + '<');
+        console.log('From identity set to >' + FromID + '<');
     }        
 
-    folderAccountCompose.logMsg('Calling the REAL ComposeStartup()  [MsgType = ' + params.type + ']');
-    ptrComposeStartup(recycled, params);           // Call original ComposeLoad function with modified fields
+    console.log('Calling the REAL ComposeStartup()  [MsgType = ' + params.type + ']');
+    ptrComposeStartup(params);           // Call original ComposeLoad function with modified fields
 
 /*
     var pop = document.getElementById("msgIdentityPopup");
@@ -344,7 +337,7 @@ ComposeStartup = function dummy(recycled, aParams) {
             var To = folderAccountCompose.getPrefs(folderURI,"to.");   
 
             if (To) {
-                folderAccountCompose.logMsg('Default To: (reply) address = >' + To + '<');
+                console.log('Default To: (reply) address = >' + To + '<');
                 params.composeFields.to = To;
                 
                 // And herein lies a big problem.  composeFields.ReplyTo is always blank, even if there is a ReplyTo.  We cannot manipulate it here.
@@ -364,11 +357,16 @@ ComposeStartup = function dummy(recycled, aParams) {
 
   
 
-    // folderAccountCompose.logMsg(Dumper(params));   // Call Dumper
+    // console.log(Dumper(params));   // Call Dumper
 
 
 }
 
+function onLoad(activatedWhileWindowOpen) {
+  window.ComposeStartup = ComposeStartup;
+}
+
+function onUnload(deactivatedWhileWindowOpen) {}
 
 
 /* For future reference, params looks like this:
@@ -776,15 +774,3 @@ function Dumper(o) {
 
 
 
-]]>
-
-
-</script>
-
-
-</overlay>
-
-
-
-
- 
