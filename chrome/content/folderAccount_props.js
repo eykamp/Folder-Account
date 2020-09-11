@@ -70,14 +70,14 @@ var folderAccountProps = {
          try {
              addToCcOnReply = userSettings.getCharPref("addToCcOnReply." + folderURI);
          } catch (e) {
-             addToCcOnReply = "false";
+             addToCcOnReply = false;
          }
 
 	// Include RepyTo on reply?
          try {
              replyToOnReplyForward = userSettings.getCharPref("replyToOnReplyForward." + folderURI);
          } catch (e) {
-             replyToOnReplyForward = "false";
+             replyToOnReplyForward = false;
          }
          
          try {
@@ -91,7 +91,7 @@ var folderAccountProps = {
          try {
              overrideReturnAddress = userSettings.getCharPref("overrideReturnAddress." + folderURI);
          } catch (e) {
-             overrideReturnAddress = "false";
+             overrideReturnAddress = false;
          }
 
         for (var i=0; i<accounts.length; i++) {
