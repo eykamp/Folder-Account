@@ -37,7 +37,7 @@ var folderAccountProps = {
 
         //var folderURI = window.opener.GetSelectedFolderURI();             // Pre 3.0
         //var folderURI = window.opener.gFolderDisplay.displayedFolder.URI;   // Want something like "imap://jefferson@www.mailco.com/INBOX/Trash"
-	var folderURI =  window.arguments[0].folder.URI;
+        var folderURI =  window.arguments[0].folder.URI;
 
 
         var userSettings = allPrefs.getBranch("extensions.folderaccount.");   
@@ -368,8 +368,7 @@ var folderAccountProps = {
             var mlReplyTo                 = document.getElementById("mlFolderAccountDefaultReplyTo");  // (by Jakob)
 
 
-            //var folderURI = window.opener.gFolderDisplay.displayedFolder.URI;
-	    var folderURI =  window.arguments[0].folder.URI;
+            var folderURI =  window.arguments[0].folder.URI;
 
             var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService);
             prefs = prefs.getBranch("extensions.folderaccount.");   
@@ -428,26 +427,26 @@ function onLoad(activatedWhileWindowOpen) {
     <tab id="FolderAccountTab" label="Folder Account" insertafter="GeneralTab"/>
     <vbox id="FolderAccountPanel" insertafter="GeneralPanel">
       <vbox id="nameBox" align="right" class="input-container">
-        <label id="identityLabel" value="From Account:" accesskey="" control="mlFolderAccount"/>
-        <menulist is="menulist-editable" id="mlFolderAccount" type="description" disableautoselect="false" onkeypress="" oncommand="" disableonsend="true">
+        <label id="identityLabel" value="From Account:" accesskey="F" control="mlFolderAccount"/>
+        <menulist is="menulist-editable" id="mlFolderAccount" type="description" disableautoselect="false">
           <menupopup id="mlFolderAccountPopup"/>
           <spacer height="2"/>
         </menulist>
-        <label id="defaultToLabel" value="Default To:" control="mlFolderAccountDefaultTo" accesskey=""/>
-        <html:input id="mlFolderAccountDefaultTo" type="text" oninput="" class="input-inline"/>
-        <label id="defaultReplyToLabel" value="Additional Reply-To:" control="mlFolderAccountDefaultReplyTo" accesskey=""/>
+        <label id="defaultToLabel" value="Default To:" control="mlFolderAccountDefaultTo" accesskey="T"/>
+        <html:input id="mlFolderAccountDefaultTo" type="text" class="input-inline"/>
+        <label id="defaultReplyToLabel" value="Additional Reply-To:" control="mlFolderAccountDefaultReplyTo" accesskey="R"/>
         <html:input id="mlFolderAccountDefaultReplyTo" type="text" class="input-inline"/>
       </vbox>
       <spacer height="6"/>
       <vbox>
-        <checkbox id="mlFolderAccountReplyToOnReplyForward" label="Use Reply-To address also on Reply and Forward" accesskey=""/>
+        <checkbox id="mlFolderAccountReplyToOnReplyForward" label="Use Reply-To address also on Reply and Forward" accesskey="U"/>
         <spacer height="2"/>
-        <checkbox id="mlFolderAccountAddToCcOnReply" label="Add to CC list on Reply (won't work on Reply-All)" accesskey=""/>
+        <checkbox id="mlFolderAccountAddToCcOnReply" label="Add to CC list on Reply (won't work on Reply-All)" accesskey="C"/>
         <spacer height="2"/>
-        <checkbox id="mlFolderAccountOverrideReturnAddress" label="Ignore From account on Reply or Reply-All (i.e. let Thunderbird choose)" accesskey=""/>
+        <checkbox id="mlFolderAccountOverrideReturnAddress" label="Ignore From account on Reply or Reply-All (i.e. let Thunderbird choose)" accesskey="I"/>
       </vbox>
     </vbox>
-  `, ["chrome://messenger/locale/folderProps.dtd", "chrome://messenger/locale/messengercompose/messengercompose.dtd"]);
+  `);
   folderAccountProps.addTab();
 }
 
