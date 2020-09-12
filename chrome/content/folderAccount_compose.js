@@ -143,10 +143,10 @@ ComposeStartup = function dummy(aParams) {
 
     }
     
-    console.log('Using settings for folderURI = >' + folderURI + '<');
+    // folderAccountCompose.logMsg('Using settings for folderURI = >' + folderURI + '<');
     
     
-    // console.log(Dumper(params));   // Call Dumper
+    // // folderAccountCompose.logMsg(Dumper(params));   // Call Dumper
     
     
     
@@ -163,7 +163,7 @@ ComposeStartup = function dummy(aParams) {
 
             if (To) {
                 params.composeFields.to = To; 
-                console.log('Default To: (new) address = >' + To + '<');
+                // folderAccountCompose.logMsg('Default To: (new) address = >' + To + '<');
             }
 
         } catch (e) { }         // Nothing to do, just leave to: at default value
@@ -183,7 +183,7 @@ ComposeStartup = function dummy(aParams) {
         if (replyTo) {
                 //params.identity.replyTo = '';        // Will alter base identity ==> could override here and restore later... but that's risky!!
                 params.composeFields.replyTo = replyTo; 
-                console.log('Adding Reply-To: = >' + replyTo + '<');
+                // folderAccountCompose.logMsg('Adding Reply-To: = >' + replyTo + '<');
             }
 
         } catch (e) { }         // Nothing to do, just leave to: at default value
@@ -199,7 +199,7 @@ ComposeStartup = function dummy(aParams) {
 
             if (addToCcOnReply == "true") {
                 params.composeFields.cc = To; 
-                console.log('Adding CC: = >' + To + '<');
+                // folderAccountCompose.logMsg('Adding CC: = >' + To + '<');
             }
 
         } catch (e) { }         // Nothing to do, just leave cc: at default value
@@ -224,10 +224,10 @@ ComposeStartup = function dummy(aParams) {
 
     if (FromID && override) {    
         params.identity = MailServices.accounts.getIdentity(FromID);
-        console.log('From identity set to >' + FromID + '<');
+        // folderAccountCompose.logMsg('From identity set to >' + FromID + '<');
     }        
 
-    console.log('Calling the REAL ComposeStartup()  [MsgType = ' + params.type + ']');
+    // folderAccountCompose.logMsg('Calling the REAL ComposeStartup()  [MsgType = ' + params.type + ']');
     ptrComposeStartup(params);           // Call original ComposeLoad function with modified fields
 
 /*
@@ -337,7 +337,7 @@ ComposeStartup = function dummy(aParams) {
             var To = folderAccountCompose.getPrefs(folderURI,"to.");   
 
             if (To) {
-                console.log('Default To: (reply) address = >' + To + '<');
+                // folderAccountCompose.logMsg('Default To: (reply) address = >' + To + '<');
                 params.composeFields.to = To;
                 
                 // And herein lies a big problem.  composeFields.ReplyTo is always blank, even if there is a ReplyTo.  We cannot manipulate it here.
@@ -357,7 +357,7 @@ ComposeStartup = function dummy(aParams) {
 
   
 
-    // console.log(Dumper(params));   // Call Dumper
+    // // folderAccountCompose.logMsg(Dumper(params));   // Call Dumper
 
 
 }
