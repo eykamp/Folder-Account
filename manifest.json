@@ -20,9 +20,6 @@
         }
       }
     },
-    "permissions": [
-      "compose"
-    ],
     "background": {
         "scripts": ["background.js"]
     }
