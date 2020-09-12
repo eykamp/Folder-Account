@@ -586,6 +586,7 @@ or
     3) Set the object properties to traverse for each type of tag
     
 */ 
+/*
 var DumperIndent = 1;
 var DumperIndentText = " ";
 var DumperNewline = "\n";
@@ -774,3 +775,4 @@ function Dumper(o) {
 
 
 
+*/
