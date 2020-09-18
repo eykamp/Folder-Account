@@ -83,7 +83,7 @@ var folderAccountProps = {
          try {
              defaultReplyTo = userSettings.getCharPref("replyTo." + folderURI);
          } catch (e) {
-             defaultReplyTo = "false";
+             defaultReplyTo = "";
          }
 
 
@@ -91,7 +91,7 @@ var folderAccountProps = {
          try {
              overrideReturnAddress = userSettings.getCharPref("overrideReturnAddress." + folderURI);
          } catch (e) {
-             overrideReturnAddress = false;
+             overrideReturnAddress = "false";
          }
 
         for (var i=0; i<accounts.length; i++) {
