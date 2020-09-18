@@ -70,20 +70,20 @@ var folderAccountProps = {
          try {
              addToCcOnReply = userSettings.getCharPref("addToCcOnReply." + folderURI);
          } catch (e) {
-             addToCcOnReply = false;
+             addToCcOnReply = "false";
          }
 
 	// Include RepyTo on reply?
          try {
              replyToOnReplyForward = userSettings.getCharPref("replyToOnReplyForward." + folderURI);
          } catch (e) {
-             replyToOnReplyForward = false;
+             replyToOnReplyForward = "false";
          }
          
          try {
              defaultReplyTo = userSettings.getCharPref("replyTo." + folderURI);
          } catch (e) {
-             defaultReplyTo = "";
+             defaultReplyTo = "false";
          }
 
 
@@ -153,9 +153,9 @@ var folderAccountProps = {
             } catch(e) { }  // Nothing to do but skip this account...
 
             document.getElementById("mlFolderAccountDefaultTo").setAttribute("value", defaultTo);
-            document.getElementById("mlFolderAccountAddToCcOnReply").checked = addToCcOnReply;
-            document.getElementById("mlFolderAccountReplyToOnReplyForward").checked = replyToOnReplyForward;
-            document.getElementById("mlFolderAccountOverrideReturnAddress").checked = overrideReturnAddress;
+            document.getElementById("mlFolderAccountAddToCcOnReply").checked = (addToCcOnReply == "true");
+            document.getElementById("mlFolderAccountReplyToOnReplyForward").checked = (replyToOnReplyForward == "true");
+            document.getElementById("mlFolderAccountOverrideReturnAddress").checked = (overrideReturnAddress == "true");
             document.getElementById("mlFolderAccountDefaultReplyTo").setAttribute("value", defaultReplyTo);  // (by Jakob)
 
         }
