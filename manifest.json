@@ -13,7 +13,7 @@
   "icons": {
     "64": "icon.png"
   },
-  "version": "10.0",
+  "version": "10.0.1",
   "experiment_apis": {
     "WindowListener": {
       "schema": "api/WindowListener/schema.json",
