@@ -1,5 +1,7 @@
 # Folder Account 2020
 
+*Note --  Welpy-cw will be taking over maintenance and new developent for this extension.  Future development will be happening at https://github.com/Welpy-cw/Folder-Account*
+
 originally by Christopher Eykamp, updated by Welpy-cw
 
 A Thunderbird extension to make managing multiple return addresses easier.
